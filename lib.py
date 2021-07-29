@@ -1,4 +1,7 @@
+"""This module includes all objects and functions
+required for running VAZIFE"""
 class Task:
+    """Task object."""
     taskID = ""
     task = ""
     class CreatedTime: 
@@ -60,7 +63,8 @@ def classifier():
     return taskQuery
 
 def listTask(taskList):
-    print("Task ID \t Task \t Task Time \t Is Done?")
+    """Lists """
+    print("Task ID\tTask\t\tTask Time\t\tIs Done?")
     for task in taskList:
         time = task.TaskTime.day + "." + task.TaskTime.month + "." + task.TaskTime.year + "-" + task.TaskTime.hour + ":" + task.TaskTime.minute
-        print(task.isComplete)
+        print("{0}\t{1}\t{2}\t{3}".format(task.taskID,task.task,time,task.isComplete))

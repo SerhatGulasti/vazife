@@ -1,5 +1,5 @@
 This is todo file of serhat
 taskID|Task|Created Time|Task Time|Created By|Completed
-1|Okula Git|21.01.2021-14:48|24.01.2021-09:50|serhat|False
-2|Ders Çalış|18.02.2021-10:21|22.03.2021-22:00|serhat|True
-3|Selam Ver|31.03.2021-22:41|15.05.2022-09:00|serhat|False
+1|Go to School|21.01.2021-14:48|24.01.2021-09:50|serhat|False
+2|Study|18.02.2021-10:21|22.03.2021-22:00|serhat|True
+3|Say "Hello"|31.03.2021-22:41|15.05.2022-09:00|serhat|False
