@@ -1,5 +1,7 @@
 """This module includes all objects and functions
 required for running VAZIFE"""
+
+import getpass
 class Task:
     """Task object."""
     taskID = ""
@@ -16,13 +18,16 @@ class Task:
 
     taskUser = ""
     isComplete = False
+    notes = ""
 
+def skip():
+    skip = input("For continue press ENTER. . .")
+    
 def fileControl():
     """Try to detect todo.txt. If cant find, this func will create it"""
     try:
         file = open("todo.txt","r")
     except FileNotFoundError:
-        import getpass
         file = open("todo.txt","w")
         file.write("This is todo file of {0}\n".format(getpass.getuser()))
         file.write("taskID|Task|Created Time|Task Time|Created By|Completed")
@@ -57,6 +62,8 @@ def classifier():
             cache = currentTask[5].split("\n")
             returnTask.isComplete = cache[0]
             
+            returnTask.notes = currentTask[6]
+            
             taskQuery.append(returnTask)
             
 
@@ -66,5 +73,19 @@ def listTask(taskList):
     """Lists """
     print("Task ID\tTask\t\tTask Time\t\tIs Done?")
     for task in taskList:
-        time = task.TaskTime.day + "." + task.TaskTime.month + "." + task.TaskTime.year + "-" + task.TaskTime.hour + ":" + task.TaskTime.minute
-        print("{0}\t{1}\t{2}\t{3}".format(task.taskID,task.task,time,task.isComplete))
+        if task.taskUser == getpass.getuser():
+            time = task.TaskTime.day + "." + task.TaskTime.month + "." + task.TaskTime.year + "-" + task.TaskTime.hour + ":" + task.TaskTime.minute
+            print("{0}\t{1}\t{2}\t{3}".format(task.taskID,task.task,time,task.isComplete))
+            
+def taskDetails(choose, taskList):
+    for task in taskList:
+        if task.taskID == choose and getpass.getuser() == task.taskUser:
+            createdTime = task.CreatedTime.day + "." + task.CreatedTime.month + "." + task.CreatedTime.year + " - " + task.CreatedTime.hour + ":" + task.CreatedTime.minute
+            taskTime = task.TaskTime.day + "." + task.TaskTime.month + "." + task.TaskTime.year + " - " + task.TaskTime.hour + ":" + task.TaskTime.minute
+            print("""taskID: {0}
+            Task:{1}
+            Task Time: {2}
+            Created by {3} at {4}
+            Notes:{5}
+            """.format(task.taskID,task.task,taskTime,task.taskUser,createdTime,task.notes))
+            skip()
