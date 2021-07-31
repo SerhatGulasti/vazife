@@ -1,2 +1,2 @@
 # vazife
-A basic todo manager for practice Python.
+A simple todo manager for practice Python.

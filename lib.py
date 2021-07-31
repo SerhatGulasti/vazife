@@ -2,6 +2,7 @@
 required for running VAZIFE"""
 
 import getpass
+from colorama import Fore, Back, Style
 class Task:
     """Task object."""
     taskID = ""
@@ -21,8 +22,13 @@ class Task:
     notes = ""
 
 def skip():
+    """For Skip Lines"""
     skip = input("For continue press ENTER. . .")
     
+def clearScreen():
+    """Prints a special string for clearing screen"""
+    print('\x1bc')
+
 def fileControl():
     """Try to detect todo.txt. If cant find, this func will create it"""
     try:
@@ -71,21 +77,46 @@ def classifier():
 
 def listTask(taskList):
     """Lists """
-    print("Task ID\tTask\t\tTask Time\t\tIs Done?")
+    print(Style.BRIGHT + Fore.RED + "Task ID\tTask\t\tTask Time\t\tIs Done?" + Style.RESET_ALL)
     for task in taskList:
         if task.taskUser == getpass.getuser():
             time = task.TaskTime.day + "." + task.TaskTime.month + "." + task.TaskTime.year + "-" + task.TaskTime.hour + ":" + task.TaskTime.minute
-            print("{0}\t{1}\t{2}\t{3}".format(task.taskID,task.task,time,task.isComplete))
+            print(Style.BRIGHT + "{0}".format(task.taskID) + Style.RESET_ALL + "\t{0}\t{1}\t{2}".format(task.task,time,task.isComplete))
             
 def taskDetails(choose, taskList):
     for task in taskList:
         if task.taskID == choose and getpass.getuser() == task.taskUser:
             createdTime = task.CreatedTime.day + "." + task.CreatedTime.month + "." + task.CreatedTime.year + " - " + task.CreatedTime.hour + ":" + task.CreatedTime.minute
             taskTime = task.TaskTime.day + "." + task.TaskTime.month + "." + task.TaskTime.year + " - " + task.TaskTime.hour + ":" + task.TaskTime.minute
+            clearScreen()
             print("""taskID: {0}
             Task:{1}
             Task Time: {2}
             Created by {3} at {4}
             Notes:{5}
             """.format(task.taskID,task.task,taskTime,task.taskUser,createdTime,task.notes))
-            skip()
+            choose = input("[E]dit [D]elete [M]enu [Q]uit => ")
+            if choose == "e" or "E":
+                editTask(task.taskID, task)
+
+def editTask(choose, task):
+    createdTime = task.CreatedTime.day + "." + task.CreatedTime.month + "." + task.CreatedTime.year + " - " + task.CreatedTime.hour + ":" + task.CreatedTime.minute
+    taskTime = task.TaskTime.day + "." + task.TaskTime.month + "." + task.TaskTime.year + " - " + task.TaskTime.hour + ":" + task.TaskTime.minute
+    clearScreen()
+    print("""taskID: {0}
+            [T]ask:{1}
+            T[a]sk Time: {2}
+            Created by {3} at {4}
+            [N]otes:{5}
+            """.format(task.taskID,task.task,taskTime,task.taskUser,createdTime,task.notes))
+
+    def editValue(value):
+        clearScreen()
+        print(Fore.RED + Style.DIM + "Old Value: " + Style.RESET_ALL + value)
+        return input(Style.BRIGHT + "New Value => " + Style.RESET_ALL)
+        
+    choose = input("What do you want to change? => ")
+    if choose == "T" or "t":
+        editValue(task.task)
+    elif choose == "n" or "N":
+        editValue(task.notes)
