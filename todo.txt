@@ -5,3 +5,4 @@ taskID|Task|Created Time|Task Time|Created By|Completed|Notes
 3|Say "Hello"|31.03.2021-22:41|15.05.2022-09:00|serhat|False|But who?
 4|Hit the Child|12.04.2021-04:29|27.09.2021-12:56|menkibe|False|I really hate this child.
 5|Wash the dishes|21.01.2021-14:49|21.01.2021-22:00|serhat|False|I cant eat on dirty plate.
+6|Lick Mehmet|26.07.2021-13:43|27.07.2021-13:42|serhat|True|I dont love him.
