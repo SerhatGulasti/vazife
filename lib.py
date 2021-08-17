@@ -1,7 +1,7 @@
 """This module includes all objects and functions
 required for running VAZIFE"""
 
-import getpass, os
+import getpass, os, datetime
 from colorama import Fore, Back, Style
 class Task:
     """Task object."""
@@ -24,9 +24,6 @@ class Task:
     isComplete = False
     notes = ""
 
-
-
-
 def intro():
     clearScreen()
     lineCenter = int(os.get_terminal_size().lines / 2)
@@ -36,6 +33,7 @@ def intro():
 
     print("Welcome to VAZIFE".center(columnCenter))
     print("pre-alpha.v0.1".center(columnCenter))
+    skip()
     
 def clearScreen():
     """Prints a special string for clearing screen"""
@@ -44,8 +42,6 @@ def clearScreen():
 def skip():
     """For Skip Lines"""
     skip = input("For continue press ENTER. . .")
-
-
 
 
 def fileControl():
@@ -129,6 +125,7 @@ def taskEdit(task):
         print("Your Task has been changed")
         skip()
     elif menuChoose.lower() == "a":
+        count = 0
         time = ["Day","Month","Year","Hour","Minute"]
         newTime = []
         for i in range(len(time)):
@@ -146,13 +143,19 @@ def taskEdit(task):
             except IndexError:
                 pass
             newTime.append(inputTime)
-    print(newTime)
-    skip()
+        clearScreen()    
+        print(Fore.RED + Style.BRIGHT + "New Time: "  + Style.RESET_ALL + "{0}.{1}.{2}-{3}:{4}".format(task.TaskTime.day, task.TaskTime.month, task.TaskTime.year, task.TaskTime.hour, task.TaskTime.minute))    
+        choose = input("Are you proceed? " + Style.DIM + "[Y/N] " + Style.RESET_ALL)
+        if choose.lower == "y":
+            task.TaskTime.day = newTime[0]
+            task.TaskTime.month = newTime[1]
+            task.TaskTime.year = newTime[2]
+            task.TaskTime.hour = newTime[3]
+            task.TaskTime.minute = newTime[4]
+        else:
+            pass
+    return task
             
-
-
-
-        
 
 def taskDetails(choose, taskList):
     for task in taskList:
@@ -169,6 +172,8 @@ def taskDetails(choose, taskList):
             menuChoose = input("[E]dit [D]elete [B]ack [M]enu => ")
             print(menuChoose)
             if menuChoose.lower() == "e":
-                taskEdit(task)
+                taskList[int(task.taskID)] = taskEdit(task)
+                print(taskList[int(task.taskID)].task)
+                skip()
             else:
                 print(":(")
